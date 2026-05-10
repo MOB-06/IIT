@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSc CSIT 1st Semester - IIT Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f4c75;
+            --secondary: #3282b8;
+            --accent: #00d4ff;
+            --danger: #e94560;
+            --warning: #f4a261;
+            --success: #2ecc71;
+            --light-bg: #f8f9fa;
+            --dark-bg: #1a1a1a;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --border-light: #e0e0e0;
+            --border-dark: #404040;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #f0f4f8 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #2a2a2a 100%);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(15, 76, 117, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .search-input {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-input {
+            width: 200px;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .nav-tab {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        body.dark-mode .nav-tab {
+            background: #2a2a2a;
+            border-color: var(--border-dark);
+            color: var(--text-light);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .nav-tab:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mark Category Headers */
+        .mark-category {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .mark-category-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .mark-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .percentage {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-left: auto;
+        }
+
+        /* Q&A Cards */
+        .qa-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .qa-card {
+            background: #2a2a2a;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .qa-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .qa-question {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(15, 76, 117, 0.05) 0%, rgba(50, 130, 184, 0.05) 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            user-select: none;
+        }
+
+        body.dark-mode .qa-question {
+            background: rgba(15, 76, 117, 0.15);
+        }
+
+        .qa-question:hover {
+            background: linear-gradient(135deg, rgba(15, 76, 117, 0.1) 0%, rgba(50, 130, 184, 0.1) 100%);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--primary);
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        body.dark-mode .question-text {
+            color: var(--accent);
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            margin-left: 1rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .qa-card.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .qa-answer {
+            display: none;
+            padding: 2rem;
+            border-top: 2px solid var(--border-light);
+            line-height: 1.8;
+        }
+
+        body.dark-mode .qa-answer {
+            border-top-color: var(--border-dark);
+        }
+
+        .qa-card.open .qa-answer {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Answer Content Styling */
+        .answer-content h4 {
+            color: var(--primary);
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-size: 1.05rem;
+        }
+
+        body.dark-mode .answer-content h4 {
+            color: var(--accent);
+        }
+
+        .answer-content ul, .answer-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-content strong {
+            color: var(--secondary);
+        }
+
+        body.dark-mode .answer-content strong {
+            color: var(--accent);
+        }
+
+        .diagram {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.dark-mode .diagram {
+            background: #1a1a1a;
+            border: 1px solid var(--border-dark);
+        }
+
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        body.dark-mode table {
+            background: #1a1a1a;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        body.dark-mode td {
+            border-bottom-color: var(--border-dark);
+        }
+
+        tr:hover {
+            background: var(--light-bg);
+        }
+
+        body.dark-mode tr:hover {
+            background: #303030;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1.4rem;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .mark-category-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .percentage {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .qa-question {
+                flex-direction: column;
+            }
+
+            .toggle-icon {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, .header-controls, .nav-tabs {
+                display: none;
+            }
+
+            .qa-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-light);
+            }
+
+            .qa-card.open .qa-answer {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div>
+                <div class="header-title">📚 BSc CSIT 1st Semester</div>
+                <div class="header-subtitle">IIT (Introduction to Information Technology) - Complete Study Guide</div>
+            </div>
+            <div class="header-controls">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search questions...">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('topic1')">💻 Computer Systems</button>
+            <button class="nav-tab" onclick="switchTab('topic2')">🌐 Networking</button>
+            <button class="nav-tab" onclick="switchTab('topic3')">⚙️ Operating Systems</button>
+            <button class="nav-tab" onclick="switchTab('topic4')">🔢 Number Systems</button>
+            <button class="nav-tab" onclick="switchTab('topic5')">💾 Databases</button>
+            <button class="nav-tab" onclick="switchTab('topic6')">🚀 Modern Tech</button>
+            <button class="nav-tab" onclick="switchTab('all')">📋 All Topics</button>
+        </div>
+
+        <!-- Topic 1: Computer Systems -->
+        <div id="topic1" class="content-section active">
+            <div class="mark-category">
+                <div class="mark-category-title">
+                    <span>💻 Introduction to Computer Systems & Hardware</span>
+                    <span class="percentage">Probability: 90%</span>
+                </div>
+            </div>
+
+            <!-- 10 Mark Questions -->
+            <div class="mark-category">
+                <div class="mark-category-title">
+                    <span class="mark-badge">10 Marks</span>
+                    <span>Long Answer Questions</span>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">Explain the five generations of computers based on their key switching components, with examples.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Five Generations of Computers:</h4>
+                        
+                        <p><strong>1st Generation (1946-1956) - Vacuum Tubes</strong></p>
+                        <ul>
+                            <li>Switching Device: Vacuum Tubes</li>
+                            <li>Size: Room-sized, very large</li>
+                            <li>Speed: Slow (milliseconds)</li>
+                            <li>Cost: Extremely expensive</li>
+                            <li>Example: ENIAC, UNIVAC, Mark-I</li>
+                            <li>Characteristics: Generated excessive heat, required cooling systems, high power consumption</li>
+                        </ul>
+
+                        <p><strong>2nd Generation (1956-1963) - Transistors</strong></p>
+                        <ul>
+                            <li>Switching Device: Transistors</li>
+                            <li>Size: Cabinet-sized, smaller than vacuum tubes</li>
+                            <li>Speed: Faster (microseconds)</li>
+                            <li>Cost: Expensive but more affordable than generation 1</li>
+                            <li>Example: IBM 7090, Honeywell 400</li>
+                            <li>Characteristics: Less heat, lower power consumption, improved reliability</li>
+                        </ul>
+
+                        <p><strong>3rd Generation (1963-1971) - Integrated Circuits (ICs)</strong></p>
+                        <ul>
+                            <li>Switching Device: Integrated Circuits (Small Scale Integration)</li>
+                            <li>Size: Desk-sized</li>
+                            <li>Speed: Faster (nanoseconds)</li>
+                            <li>Cost: Reduced cost</li>
+                            <li>Example: IBM System/360, Honeywell 6000</li>
+                            <li>Characteristics: Multiple transistors on single chip, parallel processing, introduction of operating systems</li>
+                        </ul>
+
+                        <p><strong>4th Generation (1971-1980) - Microprocessors</strong></p>
+                        <ul>
+                            <li>Switching Device: Microprocessors (Large Scale Integration - LSI, Very Large Scale Integration - VLSI)</li>
+                            <li>Size: Personal Computer size</li>
+                            <li>Speed: Much faster (picoseconds)</li>
+                            <li>Cost: Affordable</li>
+                            <li>Example: Apple II, IBM PC, Intel 4004, Intel 8085</li>
+                            <li>Characteristics: Desktop computers, graphical user interfaces, networking capabilities</li>
+                        </ul>
+
+                        <p><strong>5th Generation (1980-Present) - AI and Advanced Processors</strong></p>
+                        <ul>
+                            <li>Switching Device: Ultra Large Scale Integration (ULSI), Quantum Computing</li>
+                            <li>Size: Portable, smartphones, tablets, wearables</li>
+                            <li>Speed: Extremely fast (femtoseconds)</li>
+                            <li>Cost: Low cost, affordable</li>
+                            <li>Example: Modern Intel/AMD processors, GPUs, AI chips</li>
+                            <li>Characteristics: Artificial Intelligence, Quantum Computing, IoT, Cloud Computing, Mobile Computing</li>
+                        </ul>
+
+                        <div class="diagram">
+                            <svg width="600" height="250" viewBox="0 0 600 250">
+                                <!-- Background -->
+                                <rect width="600" height="250" fill="#f0f4f8"/>
+                                
+                                <!-- Timeline -->
+                                <line x1="50" y1="200" x2="550" y2="200" stroke="#0f4c75" stroke-width="3"/>
+                                
+                                <!-- Generation 1 -->
+                                <circle cx="70" cy="200" r="8" fill="#e94560"/>
+                                <rect x="45" y="30" width="50" height="80" fill="#e94560" opacity="0.2"/>
+                                <text x="55" y="125" font-size="12" font-weight="bold">Gen 1</text>
+                                <text x="45" y="145" font-size="10">1946-56</text>
+                                
+                                <!-- Generation 2 -->
+                                <circle cx="160" cy="200" r="8" fill="#f4a261"/>
+                                <rect x="135" y="60" width="50" height="80" fill="#f4a261" opacity="0.2"/>
+                                <text x="145" y="115" font-size="12" font-weight="bold">Gen 2</text>
+                                <text x="135" y="145" font-size="10">1956-63</text>
+                                
+                                <!-- Generation 3 -->
+                                <circle cx="250" cy="200" r="8" fill="#2ecc71"/>
+                                <rect x="225" y="90" width="50" height="80" fill="#2ecc71" opacity="0.2"/>
+                                <text x="235" y="135" font-size="12" font-weight="bold">Gen 3</text>
+                                <text x="225" y="155" font-size="10">1963-71</text>
+                                
+                                <!-- Generation 4 -->
+                                <circle cx="340" cy="200" r="8" fill="#3282b8"/>
+                                <rect x="315" y="110" width="50" height="80" fill="#3282b8" opacity="0.2"/>
+                                <text x="325" y="155" font-size="12" font-weight="bold">Gen 4</text>
+                                <text x="315" y="175" font-size="10">1971-80</text>
+                                
+                                <!-- Generation 5 -->
+                                <circle cx="430" cy="200" r="8" fill="#00d4ff"/>
+                                <rect x="405" y="120" width="50" height="80" fill="#00d4ff" opacity="0.2"/>
+                                <text x="415" y="165" font-size="12" font-weight="bold">Gen 5</text>
+                                <text x="405" y="185" font-size="10">1980-Now</text>
+                                
+                                <!-- Y-axis label -->
+                                <text x="10" y="205" font-size="11" font-weight="bold">Power</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">Define a computer system. Describe the internal functional units of a CPU (ALU, CU, and Registers).</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Definition of Computer System:</h4>
+                        <p>A <strong>computer system</strong> is an electronic device that accepts data as input, processes it using predefined instructions, and produces meaningful output. It consists of hardware and software working together to perform computational tasks.</p>
+
+                        <h4>Internal Functional Units of CPU:</h4>
+
+                        <p><strong>1. Arithmetic Logic Unit (ALU)</strong></p>
+                        <ul>
+                            <li>Performs all arithmetic operations (addition, subtraction, multiplication, division)</li>
+                            <li>Performs all logical operations (AND, OR, NOT, XOR)</li>
+                            <li>Compares values and sets condition flags</li>
+                            <li>Most critical unit for actual data processing</li>
+                        </ul>
+
+                        <p><strong>2. Control Unit (CU)</strong></p>
+                        <ul>
+                            <li>Directs and coordinates all operations of the computer</li>
+                            <li>Fetches instructions from memory</li>
+                            <li>Decodes instructions and determines what to do</li>
+                            <li>Controls the flow of data and instructions</li>
+                            <li>Sends control signals to other units</li>
+                            <li>Manages timing and synchronization</li>
+                        </ul>
+
+                        <p><strong>3. Registers</strong></p>
+                        <ul>
+                            <li>Extremely fast temporary storage locations within the CPU</li>
+                            <li>Store data currently being processed</li>
+                            <li>Store addresses of memory locations</li>
+                            <li>Store instruction being executed</li>
+                            <li>Much faster than main memory (RAM)</li>
+                            <li>Limited in quantity (typically 8-32 registers)</li>
+                            <li>Types: Accumulator Register, Data Registers, Address Registers, Instruction Register, Program Counter</li>
+                        </ul>
+
+                        <div class="diagram">
+                            <svg width="500" height="350" viewBox="0 0 500 350">
+                                <!-- CPU Box -->
+                                <rect x="20" y="20" width="460" height="310" fill="none" stroke="#0f4c75" stroke-width="3" rx="10"/>
+                                <text x="250" y="45" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f4c75">CPU (Central Processing Unit)</text>
+                                
+                                <!-- Control Unit -->
+                                <rect x="40" y="70" width="140" height="100" fill="#3282b8" opacity="0.3" stroke="#3282b8" stroke-width="2" rx="8"/>
+                                <text x="110" y="95" font-size="14" font-weight="bold" text-anchor="middle">Control Unit</text>
+                                <text x="110" y="115" font-size="11" text-anchor="middle">• Fetch Instructions</text>
+                                <text x="110" y="130" font-size="11" text-anchor="middle">• Decode & Direct</text>
+                                <text x="110" y="145" font-size="11" text-anchor="middle">• Send Signals</text>
+                                
+                                <!-- ALU -->
+                                <rect x="200" y="70" width="140" height="100" fill="#e94560" opacity="0.3" stroke="#e94560" stroke-width="2" rx="8"/>
+                                <text x="270" y="95" font-size="14" font-weight="bold" text-anchor="middle">ALU</text>
+                                <text x="270" y="115" font-size="11" text-anchor="middle">• Arithmetic Ops</text>
+                                <text x="270" y="130" font-size="11" text-anchor="middle">• Logical Ops</text>
+                                <text x="270" y="145" font-size="11" text-anchor="middle">• Comparisons</text>
+                                
+                                <!-- Registers -->
+                                <rect x="360" y="70" width="100" height="100" fill="#2ecc71" opacity="0.3" stroke="#2ecc71" stroke-width="2" rx="8"/>
+                                <text x="410" y="95" font-size="14" font-weight="bold" text-anchor="middle">Registers</text>
+                                <text x="410" y="115" font-size="11" text-anchor="middle">• Fast Storage</text>
+                                <text x="410" y="130" font-size="11" text-anchor="middle">• 8-32 units</text>
+                                <text x="410" y="145" font-size="11" text-anchor="middle">• Temporary Data</text>
+                                
+                                <!-- Memory Connection -->
+                                <rect x="40" y="200" width="420" height="70" fill="#f4a261" opacity="0.2" stroke="#f4a261" stroke-width="2" rx="8"/>
+                                <text x="250" y="225" font-size="13" font-weight="bold" text-anchor="middle">System Bus & Memory Connection</text>
+                                <text x="250" y="245" font-size="11" text-anchor="middle">Coordinates data transfer between CPU units and memory</text>
+                                
+                                <!-- Data Flow -->
+                                <path d="M 110 170 L 110 200" stroke="#0f4c75" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M 270 170 L 270 200" stroke="#e94560" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                <path d="M 410 170 L 410 200" stroke="#2ecc71" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                                        <polygon points="0 0, 10 5, 0 10" fill="#666"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 Mark Questions -->
+            <div class="mark-category">
+                <div class="mark-category-title">
+                    <span class="mark-badge">5 Marks</span>
+                    <span>Medium Answer Questions</span>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">Compare and contrast Primary Memory (RAM/ROM) and Secondary Memory.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Memory Hierarchy Comparison:</h4>
+                        
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Primary Memory (RAM/ROM)</th>
+                                        <th>Secondary Memory</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Speed</strong></td>
+                                        <td>Very fast (nanoseconds)</td>
+                                        <td>Slower (milliseconds)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Capacity</strong></td>
+                                        <td>Limited (1-32 GB)</td>
+                                        <td>Large (1 TB - 10 TB)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cost</strong></td>
+                                        <td>Expensive per GB</td>
+                                        <td>Cheap per GB</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Volatility</strong></td>
+                                        <td>Volatile (loses data when powered off)</td>
+                                        <td>Non-volatile (retains data)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Access Time</strong></td>
+                                        <td>Direct access (RAM)</td>
+                                        <td>Sequential or random access</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Examples</strong></td>
+                                        <td>RAM, ROM, Cache</td>
+                                        <td>HDD, SSD, Optical disks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Power Usage</strong></td>
+                                        <td>High power consumption</td>
+                                        <td>Low power consumption</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Primary Memory Details:</h4>
+                        <p><strong>RAM (Random Access Memory):</strong> Temporary, volatile storage for active programs and data. Loses all content when powered off.</p>
+                        <p><strong>ROM (Read Only Memory):</strong> Permanent, non-volatile storage containing firmware. Cannot be easily modified.</p>
+
+                        <h4>Secondary Memory Details:</h4>
+                        <p>Permanent storage for long-term data retention. Examples: Hard Disk Drive (HDD), Solid State Drive (SSD), USB flash drives, SD cards.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">What is Cache Memory? Explain why it is used despite its high cost.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Cache Memory Definition:</h4>
+                        <p><strong>Cache Memory</strong> is an extremely fast, small-sized memory that stores copies of frequently accessed data from main memory (RAM). It acts as a buffer between the CPU and RAM.</p>
+
+                        <h4>Characteristics of Cache:</h4>
+                        <ul>
+                            <li>Very fast access time (1-10 nanoseconds)</li>
+                            <li>Small storage capacity (256 KB - 16 MB per level)</li>
+                            <li>Located directly on the CPU die or nearby</li>
+                            <li>Expensive (10-100 times more expensive than RAM)</li>
+                            <li>Automatically managed by hardware</li>
+                        </ul>
+
+                        <h4>Levels of Cache:</h4>
+                        <p><strong>L1 Cache:</strong> Smallest but fastest (8-64 KB per core)</p>
+                        <p><strong>L2 Cache:</strong> Larger and slightly slower (256 KB - 1 MB)</p>
+                        <p><strong>L3 Cache:</strong> Largest but slower (2-20 MB, shared among cores)</p>
+
+                        <h4>Why Cache is Used Despite High Cost:</h4>
+                        <ul>
+                            <li><strong>Speed:</strong> Cache is 100-1000x faster than main memory</li>
+                            <li><strong>Performance:</strong> Significantly improves CPU performance by reducing memory access time</li>
+                            <li><strong>Temporal Locality:</strong> Recently accessed data is likely to be accessed again</li>
+                            <li><strong>Spatial Locality:</strong> Data near accessed location is likely to be needed soon</li>
+                            <li><strong>Bottleneck Reduction:</strong> Eliminates memory access bottleneck</li>
+                            <li><strong>Small Size:</strong> Small quantity needed (KB-MB range)</li>
+                            <li><strong>ROI:</strong> Performance gain justifies the cost</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">Differentiate between Impact and Non-impact printers with examples.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Characteristic</th>
+                                        <th>Impact Printers</th>
+                                        <th>Non-Impact Printers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Technology</strong></td>
+                                        <td>Uses striking mechanism (pins/hammers hit paper)</td>
+                                        <td>Uses heat, light, or chemical processes</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Noise Level</strong></td>
+                                        <td>Very noisy (70-80 dB)</td>
+                                        <td>Quiet (under 50 dB)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Speed</strong></td>
+                                        <td>Slower (5-15 lines per second)</td>
+                                        <td>Faster (20+ pages per minute)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Quality</strong></td>
+                                        <td>Lower quality output</td>
+                                        <td>High-quality, crisp output</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Color Printing</strong></td>
+                                        <td>Limited color capability</td>
+                                        <td>Full color capability possible</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cost</strong></td>
+                                        <td>Low initial cost, low operating cost</td>
+                                        <td>Higher initial cost, higher running cost</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Maintenance</strong></td>
+                                        <td>Frequent maintenance due to mechanical wear</td>
+                                        <td>Minimal maintenance required</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Paper</strong></td>
+                                        <td>Can use carbon paper, multipart forms</td>
+                                        <td>Requires plain paper</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Examples</strong></td>
+                                        <td>Dot Matrix, Line Printer, Daisy Wheel</td>
+                                        <td>Inkjet, Laser, LED, Thermal</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Impact Printers:</h4>
+                        <p><strong>Dot Matrix Printer:</strong> Uses a grid of pins to strike paper through ink ribbon. Creates dot patterns to form characters.</p>
+                        <p><strong>Line Printer:</strong> Prints entire line at once. Used for high-volume printing.</p>
+
+                        <h4>Non-Impact Printers:</h4>
+                        <p><strong>Inkjet Printer:</strong> Sprays liquid ink onto paper. Fast, good quality, affordable.</p>
+                        <p><strong>Laser Printer:</strong> Uses laser beam and toner powder. Fast, high quality, popular for offices.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">What are different types of Read Only Memory (ROM)? Explain Mask ROM, PROM, EPROM, and EEPROM.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Read Only Memory (ROM):</h4>
+                        <p><strong>ROM</strong> is non-volatile memory that permanently stores data/firmware. Its contents are retained even when power is off. It is used to store the BIOS/firmware that initializes the computer.</p>
+
+                        <h4>Types of ROM:</h4>
+
+                        <h4>1. Mask ROM</h4>
+                        <ul>
+                            <li>The oldest type of ROM</li>
+                            <li>Data is permanently written during the manufacturing process using a mask/template</li>
+                            <li>Cannot be erased or reprogrammed after manufacture</li>
+                            <li>Very cheap for large production runs</li>
+                            <li>Used in: Game cartridges, calculator chips, embedded firmware</li>
+                        </ul>
+
+                        <h4>2. PROM (Programmable ROM)</h4>
+                        <ul>
+                            <li>Can be programmed once by the user after manufacture (using a PROM burner)</li>
+                            <li>Once programmed, data cannot be changed or erased</li>
+                            <li>Uses tiny fuses that are blown during programming</li>
+                            <li>More flexible than Mask ROM for small production</li>
+                            <li>Used in: Initial firmware loading, custom applications</li>
+                        </ul>
+
+                        <h4>3. EPROM (Erasable Programmable ROM)</h4>
+                        <ul>
+                            <li>Can be erased using ultraviolet (UV) light and reprogrammed</li>
+                            <li>Has a transparent quartz window on top of the chip for UV exposure</li>
+                            <li>Erasing takes 15–20 minutes under UV light</li>
+                            <li>Can be reprogrammed multiple times</li>
+                            <li>Used in: Development prototypes, older BIOS chips</li>
+                        </ul>
+
+                        <h4>4. EEPROM (Electrically Erasable Programmable ROM)</h4>
+                        <ul>
+                            <li>Can be erased and reprogrammed electrically (no UV light needed)</li>
+                            <li>Can erase individual bytes instead of the whole chip</li>
+                            <li>Much faster and more convenient than EPROM</li>
+                            <li>Can be reprogrammed thousands of times</li>
+                            <li>Used in: Modern BIOS/UEFI chips, smart cards, microcontrollers</li>
+                            <li>Flash memory is a type of EEPROM widely used in USB drives, SSDs</li>
+                        </ul>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Mask ROM</th>
+                                        <th>PROM</th>
+                                        <th>EPROM</th>
+                                        <th>EEPROM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Programmable</strong></td>
+                                        <td>No (factory only)</td>
+                                        <td>Once</td>
+                                        <td>Multiple (UV)</td>
+                                        <td>Multiple (electrical)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Erasable</strong></td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>Yes (UV light)</td>
+                                        <td>Yes (electrically)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cost</strong></td>
+                                        <td>Cheapest (bulk)</td>
+                                        <td>Low</td>
+                                        <td>Medium</td>
+                                        <td>Highest</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Flexibility</strong></td>
+                                        <td>None</td>
+                                        <td>Low</td>
+                                        <td>Medium</td>
+                                        <td>High</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-card">
+                <div class="qa-question" onclick="toggleCard(this)">
+                    <div class="question-text">What is an Instruction Set? Explain instruction format with example.</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="qa-answer">
+                    <div class="answer-content">
+                        <h4>Instruction Set:</h4>
+                        <p>An <strong>instruction set</strong> (also called Instruction Set Architecture or ISA) is the complete collection of all commands/instructions that a CPU can understand and execute. Different processors have different instruction sets (e.g., x86, ARM, MIPS).</p>
+
+                        <h4>Examples of Instructions:</h4>
+                        <ul>
+                            <li><strong>ADD</strong> – Adds two values</li>
+                            <li><strong>MOV</strong> – Moves data from one location to another</li>
+                            <li><strong>LOAD</strong> – Loads data from memory to register</li>
+                            <li><strong>STORE</strong> – Stores data from register to memory</li>
+                            <li><strong>JMP</strong> – Jumps to a new instruction (branching)</li>
+                            <li><strong>SUB</strong> – Subtracts two values</li>
+                        </ul>
+
+                        <h4>Instruction Format:</h4>
+                        <p>An instruction format is the structure (layout) of a machine instruction. Every instruction typically contains:</p>
+                        <ul>
+                            <li><strong>Opcode (Operation Code):</strong> Specifies the operation to perform (e.g., ADD, MOV, LOAD). Typically 4–8 bits.</li>
+                            <li><strong>Operand(s):</strong> The data or address to operate on. Can be registers (R1, R2), memory addresses, or immediate values.</li>
+                        </ul>
+
+                        <h4>General Format:</h4>
+                        <pre style="background: #f0f4f8; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem;">
+| OPCODE  |  OPERAND 1  |  OPERAND 2  |
+|  4 bits |    6 bits   |    6 bits   |
+                        </pre>
+
+                        <h4>Example: ADD R1, R2</h4>
+                        <ul>
+                            <li>Opcode: ADD (operation = addition)</li>
+                            <li>Operand 1: R1 (destination register)</li>
+                            <li>Operand 2: R2 (source register)</li>
+                            <li>Meaning: Add the value in R2 to R1 and store result in R1</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic: All Topics -->
+        <div id="all" class="content-section">
+            <p style="text-align: center; font-size: 1.1rem; color: var(--primary);">
+                All questions are displayed in their respective topic sections above. Use the navigation tabs to browse by topic.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BSc CSIT 1st Semester Study Guide. Created for comprehensive exam preparation.</p>
+        <p>Last Updated: May 2024 | IIT Study Material</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Load saved theme
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+
+        // Tab Switching
+        function switchTab(tabName) {
+            const sections = document.querySelectorAll('.content-section');
+            const tabs = document.querySelectorAll('.nav-tab');
+
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Card Toggle
+        function toggleCard(element) {
+            const card = element.parentElement;
+            card.classList.toggle('open');
+        }
+
+        // Search Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const cards = document.querySelectorAll('.qa-card');
+
+                    cards.forEach(card => {
+                        const questionText = card.querySelector('.question-text').textContent.toLowerCase();
+                        const answerText = card.querySelector('.qa-answer').textContent.toLowerCase();
+
+                        if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
