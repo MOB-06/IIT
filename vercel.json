@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/", "destination": "/iit-csit-study-guide-1.html" }
+  ]
+}
